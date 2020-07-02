@@ -1,3 +1,50 @@
+import argparse
+#from DES.generateKey import generateKeys, readKey
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    group_key = parser.add_mutually_exclusive_group(required=True)
+    group_crypt = parser.add_mutually_exclusive_group()
+    group_key.add_argument(
+        '-g', '--generate-key',
+        dest='key',
+        action='store_false',
+    )
+    group_key.add_argument(
+        '-r', '--read-key',
+        dest='key',
+        action='store_true'
+    )
+    parser.add_argument(
+        'key_file',
+        type=str
+    )
+    parser.add_argument(
+        'input_file',
+        type=str
+    )
+    parser.add_argument(
+        'output_file',
+        type=str
+    )
+    group_crypt.add_argument(
+        '-e', '--encrypt',
+        dest='decrypt',
+        action='store_false'
+    )
+    group_crypt.add_argument(
+        '-d', '--decrypt',
+        action='store_true',
+    )
+
+    args = parser.parse_args()
+    print(args)
+
+
+def generateKEY(file):
+    pass
+
 
 def feistel(input, keys):
     mask = 2 ** 64 - 1
@@ -9,6 +56,7 @@ def feistel(input, keys):
         right = left ^ f_box(right, key)
         left = left_temp
     output = (right << 64) | left
+    return output
 
 
 def f_box(input, key):
@@ -40,3 +88,7 @@ def s_box(input):
                         48, 176, 112, 233, 218]
 
     return sBox_permutation[input]
+
+
+if __name__ == '__main__':
+    main()

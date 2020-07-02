@@ -56,12 +56,10 @@ if __name__ == '__main__':
     parser.add_argument(
         'input',
         type=readKey,
-        nargs='?'
     )
     parser.add_argument(
         'output',
         type=str,
-        nargs='?'
     )
     parser.add_argument(
         '-r', '--rounds',
