@@ -1,5 +1,5 @@
 import argparse
-#from DES.generateKey import generateKeys, readKey
+from DES.generateKey import generateKeys
 
 
 def main():
@@ -40,10 +40,15 @@ def main():
 
     args = parser.parse_args()
     print(args)
+    keys = []
+    with open(args.key_file, 'rb') as key_file:
+        if args.key:
+            for i in range(16):
+                keys.append(int.from_bytes(key_file.read(8), 'little'))
+        else:
+            generate_file = int.from_bytes(key_file.read(8), 'little')
+            keys = generateKeys(generate_file)
 
-
-def generateKEY(file):
-    pass
 
 
 def feistel(input, keys):
