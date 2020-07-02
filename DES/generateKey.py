@@ -29,8 +29,8 @@ def generateKeys(key, rounds=16, key_length=46):
         round_key = 0
         # permute the key
         for pos in range(len(perm_list)):
-            bit = (org_key >> perm_list[pos]) & 1  # bit is on first position
-            round_key |= (bit << pos)  # bit is on new pos and added to round key
+            bit = (org_key >> pos) & 1  # bit is on first position
+            round_key |= (bit << perm_list[pos])  # bit is on new pos and added to round key
         keys.append(round_key)
     return keys
 
