@@ -1,7 +1,7 @@
 import argparse
 
 
-def generateKeys(key, rounds=16, key_length=46):
+def generateKeys(key, rounds=16, key_length=64):
     # split key
     keys = []
     piece_length = key_length // 2  # 32
