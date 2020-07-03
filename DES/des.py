@@ -54,7 +54,7 @@ def main():
             keys = generateKeys(generate_file)
     if args.decrypt:
         print('reversing keys')
-        keys = reversed(keys)
+        keys.reverse()
 
     print('read text ', args.input_file)
     with open(args.input_file, "rb") as input_file:
