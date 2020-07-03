@@ -10,34 +10,41 @@ def main():
         '-g', '--generate-key',
         dest='key',
         action='store_false',
+        help="generate all keys from one key"
     )
     group_key.add_argument(
         '-r', '--read-key',
         dest='key',
-        action='store_true'
+        action='store_true',
+        help="read all keys from file"
     )
     parser.add_argument(
         'key_file',
-        type=str
+        type=str,
+        help="file containing key|s"
     )
     parser.add_argument(
         'input_file',
-        type=str
+        type=str,
+        help="file containing text to encrypt"
     )
     parser.add_argument(
         'output_file',
-        type=str
+        type=str,
+        help="file containing encrypted text"
     )
     group_crypt.add_argument(
         '-e', '--encrypt',
         dest='decrypt',
         action='store_false',
-        default=False
+        default=False,
+        help="encrypt"
     )
     group_crypt.add_argument(
         '-d', '--decrypt',
         action='store_true',
         default=False,
+        help="decrypt"
     )
 
     args = parser.parse_args()

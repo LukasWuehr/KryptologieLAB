@@ -57,20 +57,24 @@ if __name__ == '__main__':
     parser.add_argument(
         'input',
         type=readKey,
+        help="file with a key in little bytorder"
     )
     parser.add_argument(
         'output',
         type=str,
+        help="file which will contain all keys in little byteorder"
     )
     parser.add_argument(
         '-r', '--rounds',
         type=int,
-        default=16
+        default=16,
+        help="number of generated keys"
     )
     parser.add_argument(
         '-l', '--length',
         type=int,
-        default=64
+        default=64,
+        help="length of keys"
     )
     args = parser.parse_args()
     with open(str(args.output), 'wb') as out:
