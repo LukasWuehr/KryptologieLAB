@@ -1,5 +1,5 @@
 import argparse
-from DES.generateKey import generateKeys
+from generateKey import generateKeys
 
 
 def main():
@@ -31,11 +31,13 @@ def main():
     group_crypt.add_argument(
         '-e', '--encrypt',
         dest='decrypt',
-        action='store_false'
+        action='store_false',
+        default=False
     )
     group_crypt.add_argument(
         '-d', '--decrypt',
         action='store_true',
+        default=False,
     )
 
     args = parser.parse_args()
@@ -43,12 +45,28 @@ def main():
     keys = []
     with open(args.key_file, 'rb') as key_file:
         if args.key:
+            print('read keys ', args.key_file)
             for i in range(16):
                 keys.append(int.from_bytes(key_file.read(8), 'little'))
         else:
+            print('generate keys ', args.key_file)
             generate_file = int.from_bytes(key_file.read(8), 'little')
             keys = generateKeys(generate_file)
+    if args.decrypt:
+        print('reversing keys')
+        keys = reversed(keys)
 
+    print('read text ', args.input_file)
+    with open(args.input_file, "rb") as input_file:
+        input = int.from_bytes(input_file.read(16), 'little')
+
+    print('encrypt/decrypt text')
+    output = feistel(input, keys)
+
+    print('save new text in ', args.output_file)
+    with open(args.output_file, 'wb') as output_file:
+        output_file.write(output.to_bytes(16, 'little'))
+    print('DONE')
 
 
 def feistel(input, keys):
