@@ -48,18 +48,20 @@ def main():
     )
 
     args = parser.parse_args()
-    print(args)
+    #print(args)
     keys = []
     with open(args.key_file, 'rb') as key_file:
         if args.key:
             print('read keys ', args.key_file)
+            # read 16 times a key
             for i in range(16):
                 keys.append(int.from_bytes(key_file.read(8), 'little'))
         else:
+            # genreate all keys out of one
             print('generate keys ', args.key_file)
             generate_file = int.from_bytes(key_file.read(8), 'little')
             keys = generateKeys(generate_file)
-    if args.decrypt:
+    if args.decrypt:  # reverse the list of keys
         print('reversing keys')
         keys.reverse()
 
@@ -77,23 +79,24 @@ def main():
 
 
 def feistel(input, keys):
-    mask = 2 ** 64 - 1
+    mask = 2 ** 64 - 1  # 2/128 bit
     left = input >> 64
     right = input & mask
 
     for key in keys:
-        left_temp = right
-        right = left ^ f_box(right, key)
+        left_temp = right  # new left text piece
+        right = left ^ f_box(right, key)  # xor of left and fbox
         left = left_temp
-    output = (right << 64) | left
+    output = (right << 64) | left  # last switch
     return output
 
 
 def f_box(input, key):
-    input = input ^ key
+    input = input ^ key  # xor text with roundkey
 
     output = 0
-    mask = 2 ** 8 - 1
+    mask = 2 ** 8 - 1  # first8 bit 1
+    # split text in 8x8bit for sbox
     for byte in range(8):
         input_byte = input >> (byte * 8)
         input_byte = input_byte & mask

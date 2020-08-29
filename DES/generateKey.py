@@ -32,7 +32,7 @@ def generateKeys(key, rounds=16, key_length=64):
             bit = (org_key >> (key_length-1-pos)) & 1  # bit is on first position
             round_key |= (bit << (key_length-1-perm_list[pos]))  # bit is on new pos and added to round key
         keys.append(round_key)
-        print(round_key.to_bytes(8, 'big').hex(),i)
+        #print(round_key.to_bytes(8, 'big').hex(),i)  # print all round keys in hex
     return keys
 
 
