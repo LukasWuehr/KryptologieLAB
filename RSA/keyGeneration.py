@@ -19,7 +19,7 @@ def distinctPrimes(size: int):
         phi = (p - 1) * (q - 1)
         n = p * q
         # python has no int limit
-        good_range = 4294967295 < n <= 18446744073709551615  # big enough and still unsigned int (64 bit) #size max 32
+        good_range = 2**32 - 1 < n <= 2**64 - 1  # big enough and still unsigned int (64 bit) #size max 32
     return phi, n
 
 
@@ -28,7 +28,6 @@ def keys(size):
     while gcd(3, phi) != 1:
         phi, n = distinctPrimes(size)
     e = 3
-    print(gcd(e, phi))
     d = eEuklid(e, phi)
     return n, e, d
 
@@ -74,11 +73,16 @@ def gcd(a, b):
 
 def saveKeys(size, public, private):
     n, e, d = keys(size)
-    with open(public, 'w') as pub_file:
-        pub_file.write(n + '\n' + e)
-    with open(private, 'w') as pvt_file:
-        pvt_file.write(n + '\n' + d)
+    print(n, e, d)
+    n = n.to_bytes(8, 'big')
+    e = e.to_bytes(e.bit_length()//8+1, 'big')
+    d = d.to_bytes(d.bit_length()//8+1, 'big')
+
+    with open(public, 'wb') as pub_file:
+        pub_file.write(n + e)
+    with open(private, 'wb') as pvt_file:
+        pvt_file.write(n + d)
 
 
 if __name__ == '__main__':
-    print(keys(32))
+    print(saveKeys(32, 'public.txt', 'prvate.txt'))
