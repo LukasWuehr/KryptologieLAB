@@ -1,6 +1,6 @@
 import argparse
-from generateKey import generateKeys
-from des import feistel
+from DES_Pack.generateKey import generateKeys
+from DES_Pack.des import feistel
 
 
 def main():
