@@ -55,11 +55,11 @@ def main():
             print('read keys ', args.key_file)
             # read 16 times a key
             for i in range(16):
-                keys.append(int.from_bytes(key_file.read(8), 'little'))
+                keys.append(int.from_bytes(key_file.read(8), 'big'))
         else:
             # genreate all keys out of one
             print('generate keys ', args.key_file)
-            generate_file = int.from_bytes(key_file.read(8), 'little')
+            generate_file = int.from_bytes(key_file.read(8), 'big')
             keys = generateKeys(generate_file)
     if args.decrypt:  # reverse the list of keys
         print('reversing keys')
@@ -67,14 +67,14 @@ def main():
 
     print('read text ', args.input_file)
     with open(args.input_file, "rb") as input_file:
-        input = int.from_bytes(input_file.read(16), 'little')
+        input = int.from_bytes(input_file.read(16), 'big')
 
     print('encrypt/decrypt text')
     output = feistel(input, keys)
 
     print('save new text in ', args.output_file)
     with open(args.output_file, 'wb') as output_file:
-        output_file.write(output.to_bytes(16, 'little'))
+        output_file.write(output.to_bytes(16, 'big'))
     print('DONE')
 
 

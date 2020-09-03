@@ -29,6 +29,7 @@ def keys(size):
         phi, n = distinctPrimes(size)
     e = 3
     d = eEuklid(e, phi)
+    # print((e*d)%phi)  # =1
     return n, e, d
 
 

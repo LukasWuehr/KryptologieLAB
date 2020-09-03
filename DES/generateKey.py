@@ -40,7 +40,7 @@ def readKey(file):
     with open(file, 'rb') as open_file:
         text = open_file.read(8)
         print(text.hex())
-        return int.from_bytes(text, 'little')
+        return int.from_bytes(text, 'big')
 
 
 # only for testing purpose
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument(
         'input',
         type=readKey,
-        help="file with a key in little bytorder"
+        help="file with a key in big byteorder"
     )
     parser.add_argument(
         'output',
@@ -78,5 +78,5 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     with open(str(args.output), 'wb') as out:
-        [out.write(key.to_bytes(8,'little')) for key in generateKeys(args.input, args.rounds, args.length)]
+        [out.write(key.to_bytes(8,'big')) for key in generateKeys(args.input, args.rounds, args.length)]
     print(args)
