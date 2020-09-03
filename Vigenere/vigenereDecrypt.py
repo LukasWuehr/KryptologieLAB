@@ -22,6 +22,19 @@ def main():
                 sample_most_used_char = most_used_chars(sample_text)
             crypto_file = sys.argv[3]
             output_file = sys.argv[4]
+        elif (sys.argv[1] in ('-e', "--encrypt")):
+            with open(sys.argv[2], 'r') as file:
+                crypto_text = encrypt(file.read(),sys.argv[4])
+            with open(sys.argv[3], 'w') as file:
+                file.write(crypto_text)
+            return
+        elif (sys.argv[1] in ('-d', "--decrypt")):
+            with open(sys.argv[2], 'r') as file:
+                crypto_text = decrypt(file.read(),sys.argv[4])
+            with open(sys.argv[3], 'w') as file:
+                file.write(crypto_text)
+            return
+
         elif (sys.argv[1] in ('-h', "--help")) | True:
             print("vigenereDecrypt.py -a <sampleLanguageFile> <encryptedFile> <outputFile>")
             return
