@@ -1,5 +1,5 @@
 import argparse
-from generateKey import generateKeys
+from DES_Pack.generateKey import generateKeys
 
 
 def main():
